@@ -1,5 +1,6 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
@@ -37,6 +38,23 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         if (distance <= snapDistance)
         {
             rectTransform.anchoredPosition = correctPosition.anchoredPosition;
+
+            // Check if all images are in their correct position
+            int numCorrect = 0;
+            foreach (DragAndDrop dnd in FindObjectsOfType<DragAndDrop>())
+            {
+                if (Vector2.Distance(dnd.rectTransform.anchoredPosition, dnd.correctPosition.anchoredPosition) <= snapDistance)
+                {
+                    numCorrect++;
+                }
+            }
+
+            // If all images are in their correct position, switch the scene
+            if (numCorrect == FindObjectsOfType<DragAndDrop>().Length)
+            {
+               
+                SceneManager.LoadScene(1);
+            }
         }
 
         canvasGroup.blocksRaycasts = true;
