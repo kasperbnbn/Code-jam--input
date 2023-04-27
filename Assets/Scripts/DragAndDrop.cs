@@ -52,8 +52,9 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
             // If all images are in their correct position, switch the scene
             if (numCorrect == FindObjectsOfType<DragAndDrop>().Length)
             {
-               
                 SceneManager.LoadScene(1);
+                Destroy(GameObject.FindGameObjectWithTag("puzzle"));
+                
             }
         }
 
